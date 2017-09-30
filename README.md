@@ -1,4 +1,4 @@
-# demo1
+# 3d-graphics-demo
 
 > A canvas & webgl demo combo.
 
