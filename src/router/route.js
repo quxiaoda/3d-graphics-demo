@@ -10,8 +10,8 @@ const routes = [{
   'title': 'webgl demo',
   'base': 'webgl',
   'list': [{
-    'path': '/demo1',
-    'name': 'Demo1'
+    'path': '/getContext',
+    'name': 'getContext'
   }]
 }]
 
