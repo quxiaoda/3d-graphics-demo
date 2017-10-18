@@ -6,11 +6,12 @@
 </template>
 
 <script>
+	import {getWebGLContext} from '../base/util.js'
+
   export default {
-  	name: 'demo1',
+  	name: 'getContext',
   	mounted() {
-  		let webgl = document.getElementById('webgl')
-  		let gl = webgl.getContext('webgl')
+  		let gl = getWebGLContext('webgl')
 
   		gl.clearColor(0, 0, 0, 1)
   		gl.clear(gl.COLOR_BUFFER_BIT)

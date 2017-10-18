@@ -12,6 +12,9 @@ const routes = [{
   'list': [{
     'path': '/getContext',
     'name': 'getContext'
+  },{
+    'path': '/helloPoint',
+    'name': 'helloPoint'
   }]
 }]
 
