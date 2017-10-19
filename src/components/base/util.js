@@ -40,7 +40,7 @@ export function getWebGLContext(canvasId) {
  * @return true, if the program object was created and successfully made current 
  */
 export function initShaders(gl, vshader, fshader) {
-	console.log(gl, vshader, fshader)
+	// console.log(gl, vshader, fshader)
 	var program = createProgram(gl, vshader, fshader);
 	if (!program) {
 		console.log('Failed to create program');
