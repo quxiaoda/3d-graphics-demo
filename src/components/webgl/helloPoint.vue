@@ -7,15 +7,19 @@
     <ul class="option">
       <li>
         <span class="text">X: </span>
-        <slider class="slider" v-model="x" :min="0" :max="10" :tip-format="hideFormat" @on-input="setX"></slider>
+        <slider class="slider" v-model="x" :min="-10" :max="10" :tip-format="hideFormat" @on-input="setX"></slider>
       </li>
       <li>
         <span class="text">Y: </span>
-        <slider class="slider" v-model="y" :min="0" :max="10" :tip-format="hideFormat" @on-input="setY"></slider>
+        <slider class="slider" v-model="y" :min="-10" :max="10" :tip-format="hideFormat" @on-input="setY"></slider>
       </li>
       <li>
         <span class="text">Z: </span>
-        <slider class="slider" v-model="z" :min="0" :max="10" :tip-format="hideFormat" @on-input="setZ"></slider>
+        <slider class="slider" v-model="z" :min="-10" :max="10" :tip-format="hideFormat" @on-input="setZ"></slider>
+      </li>
+      <li>
+        <span class="text">Size: </span>
+        <slider class="slider" v-model="size" :min="1" :max="100" @on-input="setSize"></slider>
       </li>
     </ul>  
   </div>
@@ -25,6 +29,7 @@
   .option{
     width: 400px;
     margin: 0 auto;
+    text-align: left;
   }
   .text{
     display: inline-block;
@@ -50,11 +55,12 @@
         x: 0.0,
         y: 0.0,
         z: 0.0,
-        size: 10.0,
+        size: 40.0,
         gl: null,
         X: 0,
         Y: 0,
         Z: 0,
+        Size: 40
       }
     },
     methods: {
@@ -63,34 +69,39 @@
         },
         setX: function(value) {
           this.renderPoint({x: value/10})
-          console.log(value)
         },
         setY: function(value) {
           this.renderPoint({y: value/10})
-          console.log(value)
         },
         setZ: function(value) {
           this.renderPoint({z: value/10})
-          console.log(value)
         },
-        renderPoint: function({x, y, z}) {
+        setSize: function(value) {
+          this.renderPoint({size: value})
+        },
+        renderPoint: function({x, y, z, size}) {
+
+          (x !== undefined) && (this.X = x);
+          (y !== undefined) && (this.Y = y);
+          (z !== undefined) && (this.Z = z);
+          (size !== undefined) && (this.Size = size);
+
           let gl = this.gl
 
-          x && (this.X = x)
-          y && (this.Y = y)
-          z && (this.Z = z)
-
-          gl.clearColor(0, 0, 0, 1)
-          gl.clear(gl.COLOR_BUFFER_BIT)
+          this.glClear(gl)
           gl.vertexAttrib3f(this.a_Position, this.X, this.Y, this.Z)
-          // gl.vertexAttrib1f(this.a_PointSize, 40.0)
+          gl.vertexAttrib1f(this.a_PointSize, this.Size)
           // 绘制一个点
           gl.drawArrays(gl.POINTS, 0, 1)
+        },
+        glClear (gl) {
+          gl.clearColor(0, 0, 0, 1)
+          gl.clear(gl.COLOR_BUFFER_BIT)
         }
     },
   	mounted() {
       // 顶点着色器
-      // attribute 属性必须要定义在全局
+      // 注意：attribute 属性必须要定义在全局
       const VSHADER_SOURCE = 
         'attribute vec4 a_Position;\n'+
         'attribute float a_PointSize;\n'+
@@ -106,6 +117,7 @@
         '}\n';
 
       let gl = getWebGLContext('webgl')
+
       this.gl = gl //全局变量
 
       // 初始化着色器
@@ -114,6 +126,7 @@
         return;
       }
 
+      // 在js中获取顶点着色器变量的存储空间，构建映射关系
       let a_Position = gl.getAttribLocation(gl.program, 'a_Position')
       let a_PointSize = gl.getAttribLocation(gl.program, 'a_PointSize')
 
@@ -124,12 +137,12 @@
         console.log('Failed to get the storage location of a_Position')
         return
       }
+
       gl.vertexAttrib3f(a_Position, 0.0, 0.0, 0.9)
       gl.vertexAttrib1f(a_PointSize, 40.0)
 
-
-  		gl.clearColor(0, 0, 0, 1)
-  		gl.clear(gl.COLOR_BUFFER_BIT)
+  		// 清除缓冲区
+      this.glClear(gl)
 
       // 绘制一个点
       gl.drawArrays(gl.POINTS, 0, 1)
