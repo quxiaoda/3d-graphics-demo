@@ -15,6 +15,9 @@ const routes = [{
   },{
     'path': '/helloPoint',
     'name': 'helloPoint'
+  },{
+    'path': '/colorPoint',
+    'name': 'colorPoint'
   }]
 }]
 
