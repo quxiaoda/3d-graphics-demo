@@ -18,6 +18,9 @@ const routes = [{
   },{
     'path': '/colorPoint',
     'name': 'colorPoint'
+  },{
+    'path': '/clickColorPoint',
+    'name': 'clickColorPoint'
   }]
 }]
 

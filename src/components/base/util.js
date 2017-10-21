@@ -1,21 +1,3 @@
-// const TOOLS = {
-// 	getWebGLContext: canvasId => {
-// 		if (!canvasId) return
-
-// 		let webgl = document.getElementById(canvasId)
-// 		let gl = webgl.getContext('webgl') || null
-
-// 		if (!gl) {
-// 			console.log('您的浏览器不支持webgl，请更换或升级浏览器~')
-// 		}
-
-// 		return gl
-// 	}
-// }
-
-// export default TOOLS
-
-
 
 export function getWebGLContext(canvasId) {
 	if (!canvasId) return
@@ -51,6 +33,17 @@ export function initShaders(gl, vshader, fshader) {
 	gl.program = program;
 
 	return true;
+}
+
+/**
+ * clear current webgl buffer
+ * 
+ * @export
+ * @param {any} gl 
+ */
+export function glClear(gl) {
+	gl.clearColor(0, 0, 0, 1)
+    gl.clear(gl.COLOR_BUFFER_BIT)
 }
 
 /**
@@ -127,21 +120,3 @@ function loadShader(gl, type, source) {
 	return shader;
 }
 
-/** 
- * Initialize and get the rendering for WebGL
- * @param canvas <cavnas> element
- * @param opt_debug flag to initialize the context for debugging
- * @return the rendering context for WebGL
- */
-// function getWebGLContext(canvas, opt_debug) {
-// 	// Get the rendering context for WebGL
-// 	var gl = WebGLUtils.setupWebGL(canvas);
-// 	if (!gl) return null;
-
-// 	// if opt_debug is explicitly false, create the context for debugging
-// 	if (arguments.length < 2 || opt_debug) {
-// 		gl = WebGLDebugUtils.makeDebugContext(gl);
-// 	}
-
-// 	return gl;
-// }
