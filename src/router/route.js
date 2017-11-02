@@ -21,6 +21,9 @@ const routes = [{
   },{
     'path': '/clickColorPoint',
     'name': 'clickColorPoint'
+  },{
+    'path': '/multiPoint',
+    'name': 'multiPoint'
   }]
 }]
 
