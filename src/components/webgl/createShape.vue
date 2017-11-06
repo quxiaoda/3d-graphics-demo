@@ -13,6 +13,8 @@
         <Radio label="TRIANGLES_STRIP" disabled>三角带</Radio>
 
     </RadioGroup>
+    <br/>
+    <Radio @on-change="singleChangeFn">矩形</Radio>
   </div>
   
 </template>
@@ -41,10 +43,16 @@ export default {
       glClear(gl)
       gl.drawArrays(gl[value], 0, this.n);
     },
-
-    initVeryexBuffers(gl){
-      let vertices = new Float32Array([0.0, 0.5, -0.5, -0.5, 0.5, -0.5])
-      let n = 3; // 顶点的个数
+    singleChangeFn(value) {
+      if(!value) return
+        this.drawRectangle()
+    },
+    /**
+     * 初始化数据缓冲区
+     */
+    initVeryexBuffers(gl, data, a_Position, n){
+      let vertices = new Float32Array(data)
+      let _n = n; // 顶点的个数
 
       // 创建缓冲区对象
       let vertexBuffer = gl.createBuffer();
@@ -60,15 +68,27 @@ export default {
       // 向缓冲区对象中写入数据
       gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW)
 
-      this.a_Position = gl.getAttribLocation(gl.program, 'a_Position')
-
       // 将缓冲区对象分配给a_Position变量
-      gl.vertexAttribPointer(this.a_Position, 2, gl.FLOAT, false, 0, 0)
+      gl.vertexAttribPointer(a_Position, 2, gl.FLOAT, false, 0, 0)
 
       // 连接a_Position变量与分配给它的缓冲区对象
-      gl.enableVertexAttribArray(this.a_Position)
+      gl.enableVertexAttribArray(a_Position)
 
-      return n
+      return _n
+    },
+    drawTriangles() {
+      let gl = this.gl
+      let data = [0.0, 0.25, -0.25, -0.25, 0.25, -0.25]
+      let n = this.initVeryexBuffers(gl, data, this.a_Position, 3)
+      glClear(gl)
+      gl.drawArrays(gl.TRIANGLES, 0, n);
+    },
+    drawRectangle() {
+      let gl = this.gl
+      let data = [-0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5]
+      let n = this.initVeryexBuffers(gl, data, this.a_Position, 4)
+      glClear(gl)
+      gl.drawArrays(gl.TRIANGLES_STRIP, 0, n);
     }
   },
   mounted() {
@@ -97,7 +117,13 @@ export default {
       return;
     }
 
-    let n = this.initVeryexBuffers(gl)
+    let data = [0.0, 0.5, -0.5, -0.5, 0.5, -0.5]
+
+
+    this.a_Position = gl.getAttribLocation(gl.program, 'a_Position')
+
+    let n = this.initVeryexBuffers(gl, data, this.a_Position, 3)
+
     this.n = n
 
     // 在js中获取顶点着色器变量的存储空间，构建映射关系

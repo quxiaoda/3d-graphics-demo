@@ -24,6 +24,9 @@ const routes = [{
   },{
     'path': '/multiPoint',
     'name': 'multiPoint'
+  },{
+    'path': '/createShape',
+    'name': 'createShape'
   }]
 }]
 
