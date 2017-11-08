@@ -19,6 +19,7 @@
 
 <script>
 import '../base/reset.css'
+import Radio from 'iview/src/components/radio'
 import { getWebGLContext, initShaders, glClear } from '../base/util.js'
 
 export default {
@@ -33,6 +34,10 @@ export default {
       type: 'POINTS',
       n: 1
     }
+  },
+  components: {
+    Radio,
+    RadioGroup: Radio.Group
   },
   methods: {
     changeFn(value) {

@@ -10,7 +10,8 @@
         <Radio label="LINE_STRIP">线条</Radio>
         <Radio label="LINE_LOOP">回路</Radio>
         <Radio label="TRIANGLES">三角形</Radio>
-        <Radio label="TRIANGLES_STRIP" disabled>三角带</Radio>
+        <Radio label="TRIANGLE_STRIP" disabled>三角带</Radio>
+
 
     </RadioGroup>
     <br/>
@@ -21,6 +22,7 @@
 
 <script>
 import '../base/reset.css'
+import Radio from 'iview/src/components/radio'
 import { getWebGLContext, initShaders, glClear } from '../base/util.js'
 
 export default {
@@ -30,16 +32,22 @@ export default {
       gl: null,
       a_Position: null,
       u_FragColor: null,
-      points: [],
-      colors: [],
       type: 'POINTS',
       n: 1
     }
+  },
+  components: {
+    Radio,
+    RadioGroup: Radio.Group
   },
   methods: {
     changeFn(value) {
       console.log(value)
       let gl = this.gl
+      let _type = value.split('|')[0]
+      let _case = value.split('|')[1] || ''
+
+
       glClear(gl)
       gl.drawArrays(gl[value], 0, this.n);
     },
@@ -85,10 +93,10 @@ export default {
     },
     drawRectangle() {
       let gl = this.gl
-      let data = [-0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5]
+      let data = [-0.5, -0.5, 0.5, -0.5, 0.5, 0.5, - 0.5, 0.5]
       let n = this.initVeryexBuffers(gl, data, this.a_Position, 4)
       glClear(gl)
-      gl.drawArrays(gl.TRIANGLES_STRIP, 0, n);
+      gl.drawArrays(gl.TRIANGLE_FAN, 0, n);
     }
   },
   mounted() {

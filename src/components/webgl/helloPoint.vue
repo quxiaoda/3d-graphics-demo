@@ -46,6 +46,7 @@
 
 <script>
   import '../base/reset.css'
+  import slider from 'iview/src/components/slider'
 	import {getWebGLContext, initShaders} from '../base/util.js'
 
   export default {
@@ -62,6 +63,9 @@
         Z: 0,
         Size: 40
       }
+    },
+    components: {
+      slider
     },
     methods: {
         hideFormat: function(val) {
