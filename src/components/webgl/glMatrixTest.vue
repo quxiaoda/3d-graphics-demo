@@ -18,7 +18,7 @@
 		name: 'test-glmatrix',
 		created () {
 			window.Matrix4 = Matrix4; // 全局注册Matrix4供控制台调用
-			console.info('直接操控Matrix4尝试下吧~')
+			console.info('%c下面的输出是Z轴旋转90再X平移0.5的复合变换结果，你也可以在控制台直接操控Matrix4尝试下', 'color: green;font-size: 16px;')
 		},
 		mounted () {
 			let angle = 90; // 旋转角度
