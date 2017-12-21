@@ -64,7 +64,7 @@ export default {
 
       // 创建缓冲区对象
       let vertexBuffer = gl.createBuffer();
-      
+
       if (!vertexBuffer) {
         console.log('Fail to create the buffer object')
         return -1

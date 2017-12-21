@@ -27,6 +27,9 @@ const routes = [{
   },{
     'path': '/createShape',
     'name': 'createShape'
+  },{
+    'path': '/glMatrixTest',
+    'name': 'glMatrixTest'
   }]
 }]
 
